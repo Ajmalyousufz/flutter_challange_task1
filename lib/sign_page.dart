@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sharepreferences/inner_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class signPage extends StatelessWidget {
@@ -7,6 +8,7 @@ class signPage extends StatelessWidget {
   final textcontrol2 = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    getSavedData(context);
     return Scaffold(
       body: SafeArea(
           child: Center(
@@ -37,5 +39,16 @@ class signPage extends StatelessWidget {
     final sharedPrens = await SharedPreferences.getInstance();
     sharedPrens.setString("saved_username", textcontrol1.text);
     sharedPrens.setString("saved_password", textcontrol2.text);
+  }
+
+  Future<void> getSavedData(BuildContext context) async {
+    final sharedprefs = await SharedPreferences.getInstance();
+    final username = sharedprefs.getString('saved_username');
+    final password = sharedprefs.getString('saved_password');
+    if ((username != null) && (password != null)) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
+        return InnerPage();
+      }));
+    }
   }
 }
