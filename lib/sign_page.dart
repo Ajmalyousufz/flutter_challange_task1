@@ -3,12 +3,16 @@ import 'package:flutter_sharepreferences/inner_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class signPage extends StatelessWidget {
-  signPage({Key? key}) : super(key: key);
   final textcontrol1 = TextEditingController();
   final textcontrol2 = TextEditingController();
+  final bool singout;
+
+  signPage({Key? key, required this.singout}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    getSavedData(context);
+    if (singout == false) {
+      getSavedData(context);
+    }
     return Scaffold(
       body: SafeArea(
           child: Center(
@@ -23,6 +27,10 @@ class signPage extends StatelessWidget {
               ElevatedButton(
                   onPressed: () {
                     saveDataToStorage();
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (ctx) {
+                      return InnerPage();
+                    }));
                   },
                   child: Text("Submit"))
             ],
